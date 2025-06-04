@@ -11,7 +11,8 @@ This is a Proof of Concept (PoC) project that demonstrates the use of LangChain 
   - Anomaly detection with severity levels
   - Trend identification
   - Actionable recommendations
-- 🌐 REST API endpoint for data analysis
+- 🌐 REST API endpoints for data analysis
+- 📄 HTML report generation with beautiful, responsive design
 - 📝 Support for both sample data and custom data input
 
 ## Technical Stack
@@ -212,6 +213,74 @@ Analyzes silo operations data and returns structured insights.
     "Increase inflow to SILO-003 to address low volume.",
     "Ensure timely completion of HUM-001 maintenance in SILO-001.",
     "Monitor daily volume changes across all silos to proactively manage material levels."
+  ]
+}
+```
+
+### Generate HTML Report
+
+```
+POST /api/generate-report
+```
+
+Generates a comprehensive HTML report with insights analysis and saves it as a file. The report includes styled visualizations of anomalies, trends, and recommendations.
+
+**Request Body:**
+
+```json
+{
+  "siloData": [
+    // Same silo data structure as /api/analyze endpoint
+    // If not provided, sample data will be used
+  ]
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "success": true,
+  "insights": {
+    // Same insights structure as /api/analyze endpoint
+  },
+  "reportUrl": "http://localhost:3000/public/reports/silo-report-2024-01-20T10-30-00-000Z.html",
+  "filename": "silo-report-2024-01-20T10-30-00-000Z.html"
+}
+```
+
+**HTML Report Features:**
+
+- 🎨 Beautiful, responsive design with modern styling
+- 📊 Executive summary section
+- ⚠️ Color-coded anomaly cards with severity badges
+- 📈 Trend analysis with visual indicators
+- 💡 Actionable recommendations list
+- 📅 Timestamp and report metadata
+- 🌐 Accessible via web browser at the returned URL
+
+The generated HTML report is saved to the `public/reports/` directory and can be accessed directly via the returned URL. Each report has a unique filename with timestamp to prevent conflicts.
+
+**Sample HTML Report:**
+
+![HTML Report Example](./assets/html-report-screenshot.png)
+
+_Example of the generated HTML report showing the modern, responsive design with anomaly cards, trend analysis, and recommendations._
+
+### Load Sample Data
+
+```
+GET /api/sample-data
+```
+
+Returns sample silo operations data for testing purposes.
+
+**Example Response:**
+
+```json
+{
+  "siloData": [
+    // Array of silo data objects with sample data
   ]
 }
 ```

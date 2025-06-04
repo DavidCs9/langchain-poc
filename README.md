@@ -1,24 +1,61 @@
-# Sand Silo Operations AI Analysis PoC
+# Silo Operations Analysis PoC
 
-A proof of concept for AI-powered analysis of sand silo operations data using LangChain.js.
-
-## Project Overview
-
-This project implements an AI-driven system for analyzing sand silo operations data, providing intelligent insights, anomaly detection, and proactive recommendations using LangChain.js and OpenAI's GPT models.
+This is a Proof of Concept (PoC) project that demonstrates the use of LangChain and Google's Gemini AI model for analyzing silo operations data. The system uses Retrieval Augmented Generation (RAG) to provide context-aware analysis of silo operations, identifying patterns, anomalies, and generating actionable insights.
 
 ## Features
 
-- Raw data ingestion and processing
-- AI-powered analysis of silo operations
-- Anomaly detection
-- Proactive recommendations
-- Retrieval Augmented Generation (RAG) for context-aware responses
+- 🤖 Powered by Google's Gemini 2.0 Flash model
+- 🔍 Context-aware analysis using RAG (Retrieval Augmented Generation)
+- 📊 Structured insights generation including:
+  - Anomaly detection with severity levels
+  - Trend identification
+  - Actionable recommendations
+- 🌐 REST API endpoint for data analysis
+- 📝 Support for both sample data and custom data input
 
-## Prerequisites
+## Technical Stack
 
-- Node.js (v16 or higher)
-- npm (v7 or higher)
-- OpenAI API key
+- Node.js/TypeScript
+- LangChain
+- Google Generative AI (Gemini)
+- Express.js
+- Zod for data validation
+
+## API Endpoints
+
+### Health Check
+
+```
+GET /health
+```
+
+Returns the API health status.
+
+### Analyze Silo Data
+
+```
+POST /api/analyze
+```
+
+Analyzes silo operations data and returns structured insights.
+
+**Request Body:**
+
+```json
+{
+  "siloData": [
+    // Array of silo data objects
+  ]
+}
+```
+
+**Response:**
+Returns structured insights including:
+
+- Summary
+- Anomalies (sorted by severity)
+- Trends
+- Recommendations
 
 ## Setup
 
@@ -27,39 +64,20 @@ This project implements an AI-driven system for analyzing sand silo operations d
    ```bash
    npm install
    ```
-3. Create a `.env` file in the root directory with the following variables:
+3. Create a `.env` file with required environment variables:
    ```
-   OPENAI_API_KEY=your-api-key-here
-   NODE_ENV=development
+   PORT=3000
+   GOOGLE_API_KEY=your_google_api_key
    ```
-4. Build the project:
+4. Start the server:
    ```bash
-   npm run build
+   npm start
    ```
-
-## Project Structure
-
-```
-sand-silo-insights-poc/
-├── src/
-│   ├── index.ts              # Main entry point
-│   ├── types/               # TypeScript type definitions
-│   ├── rag/                 # RAG implementation
-│   └── parsers/             # Output parsing utilities
-├── data/                    # Sample and test data
-├── .env                     # Environment variables (create from .env.example)
-├── package.json
-└── tsconfig.json
-```
 
 ## Development
 
-To start the development server:
+This is a PoC project demonstrating the integration of LangChain with Google's Gemini model for industrial data analysis. The system is designed to be extensible and can be adapted for various industrial monitoring and analysis use cases.
 
-```bash
-npm run dev
-```
+## Note
 
-## License
-
-ISC
+This is a Proof of Concept and should not be used in production without proper testing and security measures.

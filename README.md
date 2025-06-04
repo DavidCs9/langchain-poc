@@ -66,9 +66,15 @@ Analyzes silo operations data and returns structured insights.
       "transferOperations": [
         {
           "type": "inflow",
-          "volume": 25,
+          "volume": 25.0,
           "durationHours": 2.5,
           "timestamp": "2024-03-20T08:00:00Z"
+        },
+        {
+          "type": "outflow",
+          "volume": 15.0,
+          "durationHours": 1.75,
+          "timestamp": "2024-03-20T14:30:00Z"
         }
       ],
       "sensorStatus": [
@@ -76,11 +82,82 @@ Analyzes silo operations data and returns structured insights.
           "sensorId": "TEMP-001",
           "status": "operational",
           "lastCalibrationDate": "2024-02-15T00:00:00Z"
+        },
+        {
+          "sensorId": "HUM-001",
+          "status": "maintenance",
+          "lastCalibrationDate": "2024-03-01T00:00:00Z"
         }
       ],
       "temperature": 22.5,
-      "humidity": 45,
+      "humidity": 45.0,
       "notes": "Regular maintenance scheduled for next week"
+    },
+    {
+      "date": "2024-03-20",
+      "siloId": "SILO-002",
+      "currentVolumePercentage": 92.0,
+      "dailyVolumeChange": 5.5,
+      "materialType": "Fine Sand",
+      "transferOperations": [
+        {
+          "type": "inflow",
+          "volume": 30.0,
+          "durationHours": 3.0,
+          "timestamp": "2024-03-20T09:15:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-002",
+          "status": "malfunction",
+          "lastCalibrationDate": "2024-01-10T00:00:00Z"
+        },
+        {
+          "sensorId": "HUM-002",
+          "status": "operational",
+          "lastCalibrationDate": "2024-03-15T00:00:00Z"
+        }
+      ],
+      "temperature": 24.0,
+      "humidity": 42.0,
+      "notes": "High volume alert - approaching capacity"
+    },
+    {
+      "date": "2024-03-20",
+      "siloId": "SILO-003",
+      "currentVolumePercentage": 15.2,
+      "dailyVolumeChange": -8.7,
+      "materialType": "Coarse Sand",
+      "transferOperations": [
+        {
+          "type": "outflow",
+          "volume": 20.0,
+          "durationHours": 2.0,
+          "timestamp": "2024-03-20T10:00:00Z"
+        },
+        {
+          "type": "outflow",
+          "volume": 12.0,
+          "durationHours": 1.5,
+          "timestamp": "2024-03-20T15:00:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-003",
+          "status": "operational",
+          "lastCalibrationDate": "2024-03-01T00:00:00Z"
+        },
+        {
+          "sensorId": "HUM-003",
+          "status": "operational",
+          "lastCalibrationDate": "2024-03-01T00:00:00Z"
+        }
+      ],
+      "temperature": 21.8,
+      "humidity": 48.0,
+      "notes": "Low volume warning - consider refill"
     }
   ]
 }

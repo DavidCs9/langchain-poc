@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
+import { BufferMemory } from "langchain/memory";
+import { ConversationChain } from "langchain/chains";
 import { SiloData } from "./types/siloData";
 import { SiloRag } from "./rag/siloRag";
 import { InsightParser } from "./parsers/insightParser";
@@ -14,6 +15,21 @@ config();
 const llm = new ChatGoogleGenerativeAI({
   model: "gemini-2.0-flash",
   temperature: 0.0,
+});
+
+// Initialize memory
+const memory = new BufferMemory({
+  returnMessages: true,
+  memoryKey: "chat_history",
+  inputKey: "input",
+  outputKey: "output",
+});
+
+// Initialize conversation chain with memory
+const chain = new ConversationChain({
+  llm,
+  memory,
+  verbose: true,
 });
 
 // Initialize RAG system and parser
@@ -50,17 +66,24 @@ async function analyzeSiloData(data: SiloData[]) {
     // Create the prompt with both context and current data using the parser
     const prompt = await insightParser.formatPrompt(contextText, formattedData);
 
-    // Get the LLM response
-    const response = await llm.invoke(prompt);
+    // Get the LLM response using the memory-enabled chain
+    const response = await chain.call({
+      input: `Previous analysis context:\n${contextText}\n\nCurrent data to analyze:\n${formattedData}\n\nPlease analyze this data and provide insights.`,
+    });
 
     // Ensure we have a string response
-    const responseContent =
-      typeof response.content === "string"
-        ? response.content
-        : JSON.stringify(response.content);
+    const responseContent = response.output;
 
     // Parse the response into structured insights
     const insights = await insightParser.parseLLMResponse(responseContent);
+
+    // Store the analysis in memory for future context
+    await memory.saveContext(
+      { input: "What were the key findings from the last analysis?" },
+      {
+        output: `Key findings from the last analysis:\n${insights.summary}\n\nAnomalies: ${insights.anomalies.length}\nTrends: ${insights.trends.length}\nRecommendations: ${insights.recommendations.length}`,
+      }
+    );
 
     // Log the structured insights
     console.log("\nAnalysis Results:");

@@ -1,0 +1,40 @@
+{
+  "date": "2024-03-20",
+  "siloId": "SILO-001",
+  "currentVolumePercentage": 75.5,
+  "dailyVolumeChange": -12.3,
+  "materialType": "Mixed Sand",
+  "transferOperations": [
+    {
+      "type": "inflow",
+      "volume": 25.0,
+      "durationHours": 2.5,
+      "timestamp": "2024-03-20T08:00:00Z"
+    },
+    {
+      "type": "outflow",
+      "volume": 15.0,
+      "durationHours": 1.75,
+      "timestamp": "2024-03-20T14:30:00Z"
+    }
+  ],
+  "sensorStatus": [
+    {
+      "sensorId": "TEMP-001",
+      "status": "operational",
+      "lastCalibrationDate": "2024-02-15T00:00:00Z"
+    },
+    {
+      "sensorId": "HUM-001",
+      "status": "maintenance",
+      "lastCalibrationDate": "2024-03-01T00:00:00Z"
+    },
+    {
+      "sensorId": "VOL-001",
+      "status": "malfunction"
+    }
+  ],
+  "temperature": 22.5,
+  "humidity": 45.0,
+  "notes": "Regular maintenance scheduled for next week"
+} 

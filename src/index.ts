@@ -17,26 +17,12 @@ const llm = new ChatGoogleGenerativeAI({
   temperature: 0.0,
 });
 
-// Initialize memory
-const memory = new BufferMemory({
-  returnMessages: true,
-  memoryKey: "chat_history",
-  inputKey: "input",
-  outputKey: "output",
-});
-
-// Initialize conversation chain with memory
-const chain = new ConversationChain({
-  llm,
-  memory,
-  verbose: true,
-});
-
 // Initialize RAG system and parser
 const siloRag = new SiloRag();
 const insightParser = new InsightParser();
 
-async function loadSampleData(): Promise<SiloData[]> {
+// Export the functions for use in the server
+export async function loadSampleData(): Promise<SiloData[]> {
   const __dirname = path.resolve();
   const dataPath = path.join(__dirname, "data/sample-daily-data.json");
   const rawData = await fs.readFile(dataPath, "utf-8");
@@ -44,7 +30,7 @@ async function loadSampleData(): Promise<SiloData[]> {
   return siloData;
 }
 
-async function analyzeSiloData(data: SiloData[]) {
+export async function analyzeSiloData(data: SiloData[]) {
   try {
     // Initialize RAG system
     await siloRag.initialize();
@@ -63,27 +49,25 @@ async function analyzeSiloData(data: SiloData[]) {
       .map((doc, i) => `Context ${i + 1}:\n${doc.pageContent}\n`)
       .join("\n");
 
-    // Create the prompt with both context and current data using the parser
-    const prompt = await insightParser.formatPrompt(contextText, formattedData);
+    console.log({ contextText, formattedData });
+
+    // Format the prompt using the insight parser
+    const formattedPrompt = await insightParser.formatPrompt(
+      contextText,
+      formattedData
+    );
 
     // Get the LLM response using the memory-enabled chain
-    const response = await chain.call({
-      input: `Previous analysis context:\n${contextText}\n\nCurrent data to analyze:\n${formattedData}\n\nPlease analyze this data and provide insights.`,
-    });
+    const response = await llm.invoke(formattedPrompt);
 
     // Ensure we have a string response
-    const responseContent = response.output;
+    const responseContent =
+      typeof response.content === "string"
+        ? response.content
+        : JSON.stringify(response.content);
 
     // Parse the response into structured insights
     const insights = await insightParser.parseLLMResponse(responseContent);
-
-    // Store the analysis in memory for future context
-    await memory.saveContext(
-      { input: "What were the key findings from the last analysis?" },
-      {
-        output: `Key findings from the last analysis:\n${insights.summary}\n\nAnomalies: ${insights.anomalies.length}\nTrends: ${insights.trends.length}\nRecommendations: ${insights.recommendations.length}`,
-      }
-    );
 
     // Log the structured insights
     console.log("\nAnalysis Results:");
@@ -133,19 +117,5 @@ async function analyzeSiloData(data: SiloData[]) {
   }
 }
 
-// Main execution
-async function main() {
-  try {
-    console.log("Loading sample data...");
-    const data = await loadSampleData();
-
-    console.log("Analyzing silo data...");
-    await analyzeSiloData(data);
-  } catch (error) {
-    console.error("Error in main execution:", error);
-    process.exit(1);
-  }
-}
-
-// Run the main function
-main();
+// Comment out or remove the main() execution since we'll be running the server instead
+// main();

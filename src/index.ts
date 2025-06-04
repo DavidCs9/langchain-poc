@@ -3,6 +3,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { SiloData } from "./types/siloData";
 import { SiloRag } from "./rag/siloRag";
+import { InsightParser } from "./parsers/insightParser";
 import fs from "fs/promises";
 import path from "path";
 
@@ -15,27 +16,9 @@ const llm = new ChatGoogleGenerativeAI({
   temperature: 0.0,
 });
 
-// Initialize RAG system
+// Initialize RAG system and parser
 const siloRag = new SiloRag();
-
-// Create the prompt template
-const promptTemplate = ChatPromptTemplate.fromTemplate(`
-You are an expert in analyzing sand silo operations data. Use the following context from similar historical operations to inform your analysis:
-
-Historical Context:
-{context}
-
-Current Data to Analyze:
-{daily_data}
-
-Based on both the historical context and current data, provide insights about:
-1. Key events and operations
-2. Any anomalies or concerns
-3. Trends in volume changes
-4. Sensor status and maintenance needs
-
-Provide your analysis in a clear, structured format.
-`);
+const insightParser = new InsightParser();
 
 async function loadSampleData(): Promise<SiloData[]> {
   const __dirname = path.resolve();
@@ -64,25 +47,53 @@ async function analyzeSiloData(data: SiloData[]) {
       .map((doc, i) => `Context ${i + 1}:\n${doc.pageContent}\n`)
       .join("\n");
 
-    // Create the prompt with both context and current data
-    const prompt = await promptTemplate.formatMessages({
-      context: contextText,
-      daily_data: formattedData,
-    });
-
-    // Debug log: print the prompt
-    console.log("Context:", {
-      context: contextText,
-      daily_data: formattedData,
-      prompt: prompt,
-    });
+    // Create the prompt with both context and current data using the parser
+    const prompt = await insightParser.formatPrompt(contextText, formattedData);
 
     // Get the LLM response
     const response = await llm.invoke(prompt);
 
-    console.log("Analysis Results:");
+    // Ensure we have a string response
+    const responseContent =
+      typeof response.content === "string"
+        ? response.content
+        : JSON.stringify(response.content);
+
+    // Parse the response into structured insights
+    const insights = await insightParser.parseLLMResponse(responseContent);
+
+    // Log the structured insights
+    console.log("\nAnalysis Results:");
     console.log("----------------");
-    console.log(response.content);
+    console.log("Summary:", insights.summary);
+
+    if (insights.anomalies.length > 0) {
+      console.log("\nDetected Anomalies:");
+      insights.anomalies.forEach((anomaly, i) => {
+        console.log(`\n${i + 1}. Type: ${anomaly.type}`);
+        console.log(`   Description: ${anomaly.description}`);
+        console.log(`   Severity: ${anomaly.severity}`);
+        console.log(`   Recommendation: ${anomaly.recommendation}`);
+      });
+    }
+
+    if (insights.trends.length > 0) {
+      console.log("\nIdentified Trends:");
+      insights.trends.forEach((trend, i) => {
+        console.log(`\n${i + 1}. Metric: ${trend.metric}`);
+        console.log(`   Description: ${trend.description}`);
+        console.log(`   Impact: ${trend.impact}`);
+      });
+    }
+
+    if (insights.recommendations.length > 0) {
+      console.log("\nRecommendations:");
+      insights.recommendations.forEach((rec, i) => {
+        console.log(`${i + 1}. ${rec}`);
+      });
+    }
+
+    return insights;
   } catch (error) {
     console.error("Error analyzing silo data:", error);
     throw error;

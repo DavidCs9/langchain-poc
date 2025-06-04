@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { SiloData } from "./types/siloData";
 import fs from "fs/promises";
@@ -9,9 +9,9 @@ import path from "path";
 config();
 
 // Initialize the LLM
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
-  temperature: 0.7,
+const llm = new ChatGoogleGenerativeAI({
+  model: "gemini-2.0-flash",
+  temperature: 0.0,
 });
 
 // Create the prompt template

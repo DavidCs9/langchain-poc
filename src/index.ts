@@ -49,8 +49,6 @@ export async function analyzeSiloData(data: SiloData[]) {
       .map((doc, i) => `Context ${i + 1}:\n${doc.pageContent}\n`)
       .join("\n");
 
-    console.log({ contextText, formattedData });
-
     // Format the prompt using the insight parser
     const formattedPrompt = await insightParser.formatPrompt(
       contextText,

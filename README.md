@@ -180,12 +180,29 @@ Analyzes silo operations data and returns structured insights.
       "description": "SILO-002 is approaching capacity (92%).",
       "severity": "medium",
       "recommendation": "Reduce inflow or increase outflow from SILO-002 to prevent overfilling."
+    },
+    {
+      "type": "volume",
+      "description": "SILO-003 has a low volume (15.2%).",
+      "severity": "medium",
+      "recommendation": "Increase inflow to SILO-003 to avoid running out of material."
+    },
+    {
+      "type": "sensor",
+      "description": "HUM-001 in SILO-001 is under maintenance. Last calibration was on 2024-03-01T00:00:00Z.",
+      "severity": "medium",
+      "recommendation": "Ensure HUM-001 maintenance is completed as scheduled to restore humidity monitoring."
     }
   ],
   "trends": [
     {
       "metric": "Daily Volume Change",
       "description": "SILO-001 and SILO-003 are experiencing negative daily volume changes, indicating material depletion.",
+      "impact": "negative"
+    },
+    {
+      "metric": "Current Volume Percentage",
+      "description": "SILO-002 shows a high current volume percentage, indicating a potential overfill risk.",
       "impact": "negative"
     }
   ],

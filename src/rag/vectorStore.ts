@@ -65,12 +65,6 @@ export class VectorStore {
       normalize: true,
     });
     const embedding = Array.from(output.data) as number[];
-    // Debug log: print shape and sample of embedding
-    console.log(
-      "[DEBUG] Embedding shape:",
-      Array.isArray(embedding) ? embedding.length : typeof embedding
-    );
-    console.log("[DEBUG] Embedding sample:", embedding.slice(0, 8));
     return embedding;
   }
 
@@ -135,7 +129,6 @@ export class VectorStore {
           metadata: sanitizedMetadata,
         },
       ]);
-      console.log(`[DEBUG] Upsert response for ${id}`);
     }
   }
 

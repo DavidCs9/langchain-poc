@@ -128,14 +128,14 @@ export class VectorStore {
         ...chunk.metadata,
       });
 
-      const upsertResponse = await index.upsert([
+      await index.upsert([
         {
           id,
           values: embedding,
           metadata: sanitizedMetadata,
         },
       ]);
-      console.log(`[DEBUG] Upsert response for ${id}:`, upsertResponse);
+      console.log(`[DEBUG] Upsert response for ${id}`);
     }
   }
 

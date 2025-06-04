@@ -2,11 +2,12 @@
   "name": "sand-silo-insights-poc",
   "version": "1.0.0",
   "description": "AI-powered analysis of sand silo operations data using LangChain.js",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "ts-node-dev --esm --respawn --transpile-only src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,7 +16,10 @@
   "dependencies": {
     "@langchain/google-genai": "^0.2.10",
     "@langchain/openai": "^0.5.11",
+    "@pinecone-database/pinecone": "^6.1.0",
+    "@xenova/transformers": "^2.17.2",
     "dotenv": "^16.5.0",
+    "hnswlib-node": "^3.0.0",
     "langchain": "^0.3.27",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
@@ -23,6 +27,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.29",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.4"
   }
 }

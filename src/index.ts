@@ -55,7 +55,7 @@ export async function analyzeSiloData(data: SiloData[]) {
       formattedData
     );
 
-    // Get the LLM response using the memory-enabled chain
+    // Get the LLM response
     const response = await llm.invoke(formattedPrompt);
 
     // Ensure we have a string response

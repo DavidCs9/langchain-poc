@@ -22,7 +22,27 @@ export class VectorStore {
     });
 
     // Delete and recreate index for a clean test
-    await this.deleteAndRecreateIndex();
+    await this.initializeIndex();
+  }
+
+  async initializeIndex() {
+    if (!this.pinecone) {
+      throw new Error("Vector store not initialized. Call initialize() first.");
+    }
+
+    const index = this.pinecone.index(this.indexName);
+    if (!index) {
+      await this.pinecone.createIndex({
+        name: this.indexName,
+        dimension: this.dimension,
+        spec: {
+          serverless: {
+            cloud: "aws",
+            region: "us-east-1",
+          },
+        },
+      });
+    }
   }
 
   private async deleteAndRecreateIndex() {

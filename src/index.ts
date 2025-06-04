@@ -38,7 +38,8 @@ Provide your analysis in a clear, structured format.
 `);
 
 async function loadSampleData(): Promise<SiloData[]> {
-  const dataPath = path.join(__dirname, "../data/sample-daily-data.json");
+  const __dirname = path.resolve();
+  const dataPath = path.join(__dirname, "data/sample-daily-data.json");
   const rawData = await fs.readFile(dataPath, "utf-8");
   const { siloData } = JSON.parse(rawData);
   return siloData;
@@ -67,6 +68,13 @@ async function analyzeSiloData(data: SiloData[]) {
     const prompt = await promptTemplate.formatMessages({
       context: contextText,
       daily_data: formattedData,
+    });
+
+    // Debug log: print the prompt
+    console.log("Context:", {
+      context: contextText,
+      daily_data: formattedData,
+      prompt: prompt,
     });
 
     // Get the LLM response

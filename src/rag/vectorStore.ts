@@ -1,21 +1,6 @@
-// TODO: Implement vector store for RAG
-// This will store and retrieve relevant context for the LLM
-// Potential implementations:
-// - Chroma
-// - Pinecone
-// - FAISS
-// - Hnswlib
-
 import { Pinecone } from "@pinecone-database/pinecone";
 import { Document } from "langchain/document";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-// Use dynamic import for transformers
-
-interface SearchResult {
-  id: string;
-  score: number;
-  metadata: Record<string, any>;
-}
 
 export class VectorStore {
   private pinecone: Pinecone | null = null;

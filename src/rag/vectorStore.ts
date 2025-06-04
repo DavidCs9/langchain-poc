@@ -22,7 +22,8 @@ export class VectorStore {
     });
 
     // Delete and recreate index for a clean test
-    await this.initializeIndex();
+    // await this.initializeIndex();
+    await this.deleteAndRecreateIndex();
   }
 
   async initializeIndex() {

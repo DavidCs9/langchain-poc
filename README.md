@@ -6,13 +6,13 @@ This is a Proof of Concept (PoC) project that demonstrates the use of LangChain 
 
 - 🤖 Powered by Google's Gemini 2.0 Flash model
 - 🔍 Context-aware analysis using RAG (Retrieval Augmented Generation)
+- 🔄 Vector-based semantic search using Pinecone and Xenova transformers
 - 📊 Structured insights generation including:
   - Anomaly detection with severity levels
   - Trend identification
   - Actionable recommendations
 - 🌐 REST API endpoint for data analysis
 - 📝 Support for both sample data and custom data input
-- 🔄 Vector-based semantic search using Pinecone and Xenova transformers
 
 ## Technical Stack
 

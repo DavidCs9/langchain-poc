@@ -24,16 +24,66 @@
         {
           "sensorId": "TEMP-001",
           "status": "operational",
-          "lastCalibrationDate": "2024-02-15"
+          "lastCalibrationDate": "2024-02-15",
+          "reading": 25.5
         },
         {
           "sensorId": "VOL-001",
           "status": "operational",
-          "lastCalibrationDate": "2024-02-20"
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 75.0
+        },
+        {
+          "sensorId": "PRES-001",
+          "status": "operational",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 2.1
         }
       ],
       "temperature": 25,
-      "humidity": 45
+      "humidity": 45,
+      "pressure": 2.1,
+      "materialDensity": 1.6
+    },
+    {
+      "date": "2024-03-01",
+      "siloId": "Silo B",
+      "currentVolumePercentage": 90,
+      "dailyVolumeChange": 25,
+      "materialType": "Coarse Aggregate",
+      "transferOperations": [
+        {
+          "type": "inflow",
+          "volume": 200,
+          "durationHours": 4,
+          "timestamp": "2024-03-01T10:00:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-002",
+          "status": "warning",
+          "lastCalibrationDate": "2024-02-01",
+          "reading": 32.5
+        },
+        {
+          "sensorId": "VOL-002",
+          "status": "operational",
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 90.0
+        },
+        {
+          "sensorId": "PRES-002",
+          "status": "operational",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 2.3
+        }
+      ],
+      "temperature": 32,
+      "humidity": 55,
+      "pressure": 2.3,
+      "materialDensity": 1.8,
+      "notes": "Temperature sensor showing elevated readings"
     },
     {
       "date": "2024-03-02",
@@ -53,17 +103,147 @@
         {
           "sensorId": "TEMP-001",
           "status": "maintenance",
-          "lastCalibrationDate": "2024-02-15"
+          "lastCalibrationDate": "2024-02-15",
+          "reading": null
         },
         {
           "sensorId": "VOL-001",
           "status": "operational",
-          "lastCalibrationDate": "2024-02-20"
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 60.0
+        },
+        {
+          "sensorId": "PRES-001",
+          "status": "warning",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 2.8
         }
       ],
-      "temperature": 26,
+      "temperature": null,
       "humidity": 48,
-      "notes": "Temperature sensor under maintenance"
+      "pressure": 2.8,
+      "materialDensity": 1.6,
+      "notes": "Temperature sensor under maintenance, pressure reading elevated"
+    },
+    {
+      "date": "2024-03-02",
+      "siloId": "Silo B",
+      "currentVolumePercentage": 85,
+      "dailyVolumeChange": -15,
+      "materialType": "Coarse Aggregate",
+      "transferOperations": [
+        {
+          "type": "outflow",
+          "volume": 75,
+          "durationHours": 2,
+          "timestamp": "2024-03-02T11:00:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-002",
+          "status": "critical",
+          "lastCalibrationDate": "2024-02-01",
+          "reading": 38.5
+        },
+        {
+          "sensorId": "VOL-002",
+          "status": "operational",
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 85.0
+        },
+        {
+          "sensorId": "PRES-002",
+          "status": "operational",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 2.2
+        }
+      ],
+      "temperature": 38,
+      "humidity": 60,
+      "pressure": 2.2,
+      "materialDensity": 1.8,
+      "notes": "Critical temperature warning - immediate attention required"
+    },
+    {
+      "date": "2024-03-03",
+      "siloId": "Silo A",
+      "currentVolumePercentage": 45,
+      "dailyVolumeChange": -60,
+      "materialType": "Fine Sand",
+      "transferOperations": [
+        {
+          "type": "outflow",
+          "volume": 200,
+          "durationHours": 4,
+          "timestamp": "2024-03-03T08:00:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-001",
+          "status": "maintenance",
+          "lastCalibrationDate": "2024-02-15",
+          "reading": null
+        },
+        {
+          "sensorId": "VOL-001",
+          "status": "warning",
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 45.0
+        },
+        {
+          "sensorId": "PRES-001",
+          "status": "critical",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 3.2
+        }
+      ],
+      "temperature": null,
+      "humidity": 50,
+      "pressure": 3.2,
+      "materialDensity": 1.6,
+      "notes": "Critical pressure warning, volume below recommended threshold"
+    },
+    {
+      "date": "2024-03-03",
+      "siloId": "Silo B",
+      "currentVolumePercentage": 95,
+      "dailyVolumeChange": 35,
+      "materialType": "Coarse Aggregate",
+      "transferOperations": [
+        {
+          "type": "inflow",
+          "volume": 250,
+          "durationHours": 5,
+          "timestamp": "2024-03-03T09:00:00Z"
+        }
+      ],
+      "sensorStatus": [
+        {
+          "sensorId": "TEMP-002",
+          "status": "critical",
+          "lastCalibrationDate": "2024-02-01",
+          "reading": 40.0
+        },
+        {
+          "sensorId": "VOL-002",
+          "status": "warning",
+          "lastCalibrationDate": "2024-02-20",
+          "reading": 95.0
+        },
+        {
+          "sensorId": "PRES-002",
+          "status": "warning",
+          "lastCalibrationDate": "2024-02-10",
+          "reading": 2.9
+        }
+      ],
+      "temperature": 40,
+      "humidity": 65,
+      "pressure": 2.9,
+      "materialDensity": 1.8,
+      "notes": "Multiple critical warnings: temperature, volume near capacity, elevated pressure"
     }
   ]
 } 

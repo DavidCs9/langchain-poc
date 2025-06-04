@@ -69,6 +69,16 @@ async function analyzeSiloData(data: SiloData[]) {
 
     if (insights.anomalies.length > 0) {
       console.log("\nDetected Anomalies:");
+      if (insights.anomalies.length > 1) {
+        insights.anomalies.sort((a, b) => {
+          const severityOrder = {
+            low: 1,
+            medium: 2,
+            high: 3,
+          };
+          return severityOrder[b.severity] - severityOrder[a.severity];
+        });
+      }
       insights.anomalies.forEach((anomaly, i) => {
         console.log(`\n${i + 1}. Type: ${anomaly.type}`);
         console.log(`   Description: ${anomaly.description}`);
